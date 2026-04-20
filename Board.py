@@ -1,0 +1,87 @@
+from Particle import Particle, RandomParticle
+import numpy as np
+import os
+
+#default board
+class Board:
+
+    def __init__(self, x_start, y_start, x_end, y_end):
+        self.x_start = x_start
+        self.y_start = y_start
+        self.x_end = x_end
+        self.y_end = y_end
+        self.database = []
+
+    #getter methods
+    def horizontal_start(self):
+        return(self.x_start)
+    
+    def vertical_start(self):
+        return(self.y_start)
+    
+    def horizontal_end(self):
+        return(self.x_end)
+
+    def vertical_end(self):
+        return(self.y_end)
+
+    #size of the 
+    def width(self):
+        return(abs(self.x_end - self.x_start))
+
+    def height(self):
+        return(abs(self.y_end - self.y_start))
+
+    #add particle
+    def add_particle(self, particle):
+        particle.x_start = self.x_start
+        particle.y_start = self.y_start
+        particle.x_end = self.x_end
+        particle.y_end = self.y_end
+        self.database.append(particle)
+        
+    #remove last particle
+    def remove_particle(self, particle):
+        self.database.remove(particle)
+
+
+    #show particles
+    def show_particles(self):
+        for particle in self.database:
+            particle.print_particle_info()
+
+            
+#----------------------------------------------------------------------
+#random board
+class RandomBoard(Board):
+
+    #constants
+    NUM_STEP = 1000
+
+    #data that keeps the all the positions of the particle
+    motion_data = np.zeros((NUM_STEP, 2), dtype = "int32")
+    
+    #keeps information about particle in database
+    def move_particle(self, particle):
+        for i in range(self.NUM_STEP):
+            #writing coordinates in the database
+            self.motion_data[i, 0] = particle.get_x()
+            self.motion_data[i, 1] = particle.get_y()
+
+            #random change of position of particle
+            #last position of the particle does not matter
+            particle.random_motion()
+            
+    #saving data in the file
+    def save_data(self, filename, directory):
+        full_path = os.path.join(directory, filename)
+        data = open(full_path, "w")
+        for i in range(self.NUM_STEP):
+            line = "%s %s\n" % (self.motion_data[i, 0], self.motion_data[i, 1])
+            data.write(line)
+        data.close()
+        self.motion_data.fill(0)
+
+    
+
+
