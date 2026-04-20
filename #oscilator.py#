@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+class oscilator:
+    def --init--(self, Nt, dt):
+        #coordinate and time
+        initialisation
+        self.x_pos = np.zeros(Nt, dtype = np.float64)
+        self.time = np.zeros(Nt, dtype = np.float64)
+        #initialisation of the velocity
+        self.x_vel = np.zeros(Nt, dtype = np.float64)
+        #initial conditions
+        self.x_pos[0] = 1
+        
+    def euler(self):
+        #Euler method
+        for i in range(Nt-1):
+            self.time[i+1] = self.time[i] + dt
+            acc = -self.x_pos[i]
+            x_vel[i+1] = self.x_vel[i] + acc*dt
+            x_pos[i+1] = self.x_pos[i] + self.x_vel[i]*dt
+
+        plt.plot(time, x_pos)
+        plt.show()
+
+
+        

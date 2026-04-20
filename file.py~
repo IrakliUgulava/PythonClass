@@ -1,0 +1,31 @@
+import pygame
+import random
+
+# 1. Setup
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+clock = pygame.time.Clock()
+running = True
+
+# Particle starting position (center of screen)
+x, y = 400, 300
+
+# 2. Main Loop
+while running:
+    # Check for exit
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # 3. Logic: The Random Walk (+1 / -1)
+    x += random.choice([-1, 1])
+    y += random.choice([-1, 1])
+
+    # 4. Rendering
+    screen.fill((0, 0, 0)) # Clear screen with black
+    pygame.draw.circle(screen, (0, 255, 0), (int(x), int(y)), 3) # Draw Green Particle
+    
+    pygame.display.flip() # Update display
+    clock.tick(60) # Limit to 60 FPS
+
+pygame.quit()

@@ -1,0 +1,8 @@
+import oscilator as osc
+
+Nt = 100
+dt = 0.1
+
+sim = oscoscilator(Nt, dt)
+sim.euler()
+

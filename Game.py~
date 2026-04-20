@@ -1,0 +1,58 @@
+from Board import Board, RandomBoard
+from Particle import Particle, RandomParticle
+from dataanalysis import DataAnalysis
+import random
+import os
+import pygame
+
+
+NUM_ITERATIONS = 1000
+NUM_PARTICLES = 10
+
+board = RandomBoard(-100, -100, 100, 100)
+
+
+#test script
+for i in range(NUM_PARTICLES):
+    #random coordinates on the board
+    x_rand = random.randint(board.horizontal_start(),
+                            board.horizontal_end())
+    y_rand = random.randint(board.vertical_start(),
+                            board.vertical_end())
+
+    #random mass
+    m = random.randint(1, 10)
+
+    #random particle creation
+    particle = RandomParticle(x_rand, y_rand, m)
+
+    board.add_particle(particle)
+
+#check that particles are kept in the database
+board.show_particles()
+
+#time for simulation
+index = 0
+for particle in board.database:
+    #creation of folder for the specific particle
+    path = "DataFolder/particle%s" % index
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+    #temporarily recording the initial state
+    x_temp = particle.get_x()
+    y_temp = particle.get_y()
+    
+    
+    #keeping data of the several iterations
+    for i in range(NUM_ITERATIONS):
+        filename = "iteration%s" % i
+        board.move_particle(particle)
+        board.save_data(filename, path)
+
+        #returning to initial state
+        particle.set_coordinates(x_temp, y_temp)
+        
+    index += 1
+        
+

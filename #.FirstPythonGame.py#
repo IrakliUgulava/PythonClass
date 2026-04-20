@@ -1,0 +1,34 @@
+import random
+from random import randint
+from random import choice
+
+xSize = 100
+ySize = 100
+
+xInit = 20
+yInit = 20
+
+xCurr = xInit
+yCurr = yInit
+
+numSteps = 100
+
+datafile = open("data.txt", "w")
+datafile.write("x y\n")
+while numSteps > 0:
+	datafile.write("%s %s\n" % (xCurr, yCurr))
+	step = random.randint(-1, 1)
+	goX = random.choice([True, False])
+	if goX:
+		if  xCurr + step <= xSize and xCurr + step >= 0:
+			xCurr += step
+		else:
+			xCurr -= step
+	else:
+		if  yCurr + step <= ySize and yCurr + step >= 0:
+			yCurr += step
+		else:
+			yCurr -= step
+	numSteps -= 1
+datafile.close()
+
