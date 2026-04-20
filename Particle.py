@@ -1,4 +1,5 @@
 import random
+from types import prepare_class
 import numpy as np
 
 #free particle
@@ -95,6 +96,9 @@ class RandomParticle(Particle):
     def print_particle_info(self):
         info = "X position: %s, Y position %s, mass: %s\n" % (self.x_pos,self.y_pos,self.mass)
         print(info)
+
+    def donothing(self):
+        pass
 
 
 
